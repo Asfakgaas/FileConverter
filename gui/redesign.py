@@ -4,6 +4,8 @@ from tkinter import ttk
 from tkinter import filedialog
 import pandas as pd
 from pathlib import Path
+import pytesseract
+from PIL import Image
 
 #GUI
 win = tk.Tk()
@@ -48,6 +50,21 @@ def exel_conver():
     lab = tk.Label(win, text="converted")
     lab.place(x=250, y=350)
     print("converted")
+def img_text():
+    file_path = filedialog.askopenfilename(filetypes=())
+    image = Image.open(file_path)
+    text_img = pytesseract.image_to_string(image)
+    new_win = tk.Tk()
+    new_win.title("Text")
+    new_win.geometry("600x600")
+    new_win.configure(bg='white')
+    #file_lable3 = tk.Label(new_win,text = text_img, width= 100, height= 100)
+    text = tk.Text(new_win)
+    text.insert("1.0", text_img)
+    text.pack()
+    #file_lable3.pack()
+    new_win.mainloop()
+
 
 
 #file search button
@@ -57,14 +74,10 @@ style.configure("TButton", font=("bolt", 14), background="white")
 #button.place(x=400, y=150)
 button2 = ttk.Button(win, text="convert to execl", style="TButton", command=convert)
 button2.place(x= 250, y = 400)
-#button3 = ttk.Button (win, text="Upload execl file", style="TButton", command=execl_file)
-#button3.place(x=400, y=250)
+button3 = ttk.Button (win, text="Upload img", style="TButton", command=img_text)
+button3.place(x=400, y=250)
 button4 = ttk.Button(win, text="convert to csv", style="TButton", command=exel_conver)
 button4.place(x=100, y=400)
-
-
-
-
 
 win.mainloop()
 
