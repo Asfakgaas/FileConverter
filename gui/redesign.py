@@ -6,6 +6,11 @@ import pandas as pd
 from pathlib import Path
 import pytesseract
 from PIL import Image
+import pdf2docx
+from pdf2docx import Converter
+import os
+import docx
+
 
 #GUI
 win = tk.Tk()
@@ -65,13 +70,31 @@ def img_text():
     #file_lable3.pack()
     new_win.mainloop()
 
+def pdf_word():
+    pdf_path = filedialog.askopenfilename(filetypes=[("pdf file", "*.pdf")])
+    if pdf_path:
+        doc_path = filedialog.askdirectory()
+        document = docx.Document()
+        os.makedirs(doc_path, exist_ok=True)
+        doc_new_path = os.path.join(doc_path, "converted.docx")
+        cv = Converter(pdf_path)
+        cv.convert(doc_new_path)
+        cv.close()
+    else:
+        pass
+
+
+
+
+
+
 
 
 #file search button
 style = ttk.Style()
 style.configure("TButton", font=("bolt", 14), background="white")
-#button = ttk.Button(win, text="Upload .csv file", style="TButton", command=file_search)
-#button.place(x=400, y=150)
+button = ttk.Button(win, text="pdf to word", style="TButton", command=pdf_word)
+button.place(x=400, y=150)
 button2 = ttk.Button(win, text="convert to execl", style="TButton", command=convert)
 button2.place(x= 250, y = 400)
 button3 = ttk.Button (win, text="Upload img", style="TButton", command=img_text)
