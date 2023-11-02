@@ -69,6 +69,17 @@ def img_text():
     text.pack()
     #file_lable3.pack()
     new_win.mainloop()
+def img_web():
+    img_path = filedialog.askopenfilename(filetypes=())
+    if img_web:
+        web_path = filedialog.askdirectory()
+        image = Image.open(img_path)
+        image = image.convert('RGB')
+        image.save(web_path+'/new-format.webp', 'webp')
+        lab = tk.Label(win, text="converted")
+        lab.place(x=250, y=350)
+    else:
+        pass
 
 def pdf_word():
     pdf_path = filedialog.askopenfilename(filetypes=[("pdf file", "*.pdf")])
@@ -79,6 +90,8 @@ def pdf_word():
         doc_new_path = os.path.join(doc_path, "converted.docx")
         cv = Converter(pdf_path)
         cv.convert(doc_new_path)
+        lab = tk.Label(win, text="converted")
+        lab.place(x=250, y=350)
         cv.close()
     else:
         pass
@@ -101,6 +114,8 @@ button3 = ttk.Button (win, text="Upload img", style="TButton", command=img_text)
 button3.place(x=400, y=250)
 button4 = ttk.Button(win, text="convert to csv", style="TButton", command=exel_conver)
 button4.place(x=100, y=400)
+button5 = ttk.Button(win, text="convert to web", style="TButton", command=img_web)
+button5.place(x=400, y=350)
 
 win.mainloop()
 
